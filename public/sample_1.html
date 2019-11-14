@@ -1,0 +1,29 @@
+<!-- Tien Nguyen (tien.nguyen@mulodo.com) -->
+<html>
+   <head>
+      <title>Mulodo Vietnam :: VueJs Training</title>
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   </head>
+   <body>
+      <div id = "vue_demo">
+         <h1>Firstname : {{firstname}}</h1>
+         <h1>Lastname : {{lastname}}</h1>
+         <h1>{{mydetails()}}</h1>
+      </div>
+      <script>
+        var  vm = new Vue({
+            el: '#vue_demo',
+            data: {
+               firstname : "Anna",
+               lastname  : "Nguyen",
+               address    : "QTSC"
+            },
+            methods: {
+               mydetails : function() {
+                  return "I am "+this.firstname +" "+ this.lastname;
+               }
+            }
+         })
+      </script>
+   </body>
+</html>
