@@ -1,0 +1,22 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Render Function</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="component_test">
+            <testcomponent></testcomponent>
+            <testcomponent></testcomponent>
+            <testcomponent></testcomponent>
+        </div>
+        <script type = "text/javascript">
+            Vue.component('testcomponent',{
+               template : '<h1>Hello World</h1>'
+            });
+            var vm = new Vue({
+               el: '#component_test'
+            });
+        </script>
+    </body>
+</html>

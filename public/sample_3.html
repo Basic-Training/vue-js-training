@@ -1,0 +1,79 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Vue Life Cycle Testing</title>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" name="message" v-model="message">
+            <p>{{ message }}</p>
+        </div>
+
+        <script type="text/javascript">
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: "Hello World!"
+                },
+                beforeCreate: function () {
+                    console.group('beforeCreate Pre-creation state===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+                    console.log("%c%s", "color:red", "data   : " + this.$data); //undefined
+                    console.log("%c%s", "color:red", "message: " + this.message); //undefined
+                },
+                created: function () {
+                    console.group('created Create the completed state===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+                    console.log("%c%s", "color:red", "data   : " + this.$data); //Initialized
+                    console.log("%c%s", "color:red", "message: " + this.message); //Initialized
+                },
+                beforeMount: function () {
+                    console.group('beforeMount Pre-mount status===============>');
+                    console.log("%c%s", "color:red", "el     : " + (
+                        this.$el
+                    )); //Initialized
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data); //Initialized
+                    console.log("%c%s", "color:red", "message: " + this.message); //Initialized
+                },
+                mounted: function () {
+                    console.group('mounted Mount End State===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el); //Initialized
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data); //Initialized
+                    console.log("%c%s", "color:red", "message: " + this.message); //Initialized
+                },
+                beforeUpdate: function () {
+                    console.group('beforeUpdate Pre-update status===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el);
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data);
+                    console.log("%c%s", "color:red", "message: " + this.message);
+                },
+                updated: function () {
+                    console.group('updated Update completion status===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el);
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data);
+                    console.log("%c%s", "color:red", "message: " + this.message);
+                },
+                beforeDestroy: function () {
+                    console.group('beforeDestroy Pre-destruction status===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el);
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data);
+                    console.log("%c%s", "color:red", "message: " + this.message);
+                },
+                destroyed: function () {
+                    console.group('destroyed Destruction Completion Status===============>');
+                    console.log("%c%s", "color:red", "el     : " + this.$el);
+                    console.log(this.$el);
+                    console.log("%c%s", "color:red", "data   : " + this.$data);
+                    console.log("%c%s", "color:red", "message: " + this.message)
+                }
+            })
+        </script>
+    </body>
+</html>

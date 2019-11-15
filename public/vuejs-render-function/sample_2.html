@@ -1,0 +1,23 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Render Function</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <h1>Component does provide something called as slots. Let's make use of it and see if we get the desired results.</h1>
+        <div id="component_test">
+            <testcomponent>test 1</testcomponent>
+            <testcomponent>test 2</testcomponent>
+            <testcomponent>test 3</testcomponent>
+        </div>
+        <script type = "text/javascript">
+            Vue.component('testcomponent',{
+               template : '<h1><slot></slot></h1>'
+            });
+            var vm = new Vue({
+               el: '#component_test'
+            });
+        </script>
+    </body>
+</html>

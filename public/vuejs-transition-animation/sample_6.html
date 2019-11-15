@@ -1,0 +1,41 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Transition and Animation</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1"
+            rel="stylesheet"
+            type="text/css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="animate" style="text-align:center">
+            <transition
+                appear="appear"
+                appear-class="custom-appear-class"
+                appear-active-class="animated bounceIn">
+                <h1>BounceIn - Animation Example</h1>
+            </transition>
+            <transition
+                appear="appear"
+                appear-class="custom-appear-class"
+                appear-active-class="animated swing">
+                <h1>Swing - Animation Example</h1>
+            </transition>
+            <transition
+                appear="appear"
+                appear-class="custom-appear-class"
+                appear-active-class="animated rubberBand">
+                <h1>RubberBand - Animation Example</h1>
+            </transition>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#animate',
+                data: {
+                    show: true
+                }
+            });
+        </script>
+    </body>
+</html>

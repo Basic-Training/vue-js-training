@@ -1,0 +1,39 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Computed Properties</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <h1>
+            Get/Set in Computed Properties
+        </h1>
+        <div id="computed_props">
+            <input type="text" v-model="fullname"/>
+            <h1>{{firstName}}</h1>
+            <h1>{{lastName}}</h1>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#computed_props',
+                data: {
+                    firstName: "Terry",
+                    lastName: "Ben"
+                },
+                methods: {},
+                computed: {
+                    fullname: {
+                        get: function () {
+                            return this.firstName + " " + this.lastName;
+                        },
+                        set: function (name) {
+                            var fname = name.split(" ");
+                            this.firstName = fname[0];
+                            this.lastName = fname[1]
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

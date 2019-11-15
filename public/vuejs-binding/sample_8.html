@@ -1,0 +1,23 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Binding</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <h1>Binding Inline Styles</h1>
+        <div id="databinding">
+            <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">{{title}}</div>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#databinding',
+                data: {
+                    title: "Inline style Binding",
+                    activeColor: 'red',
+                    fontSize: '30'
+                }
+            });
+        </script>
+    </body>
+</html>

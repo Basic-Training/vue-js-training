@@ -1,0 +1,33 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Vue Components Testing</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="component_test">
+            <testcomponent></testcomponent>
+        </div>
+        <div id="component_test1">
+            <testcomponent></testcomponent>
+        </div>
+        <script>
+            Vue.component('testcomponent', {
+                template: '<div v-on:mouseover = "changename()" v-on:mouseout = "originalname();"><h1>Custom Component created by <span id = "name">{{name}}</span></h1></div>',
+                data: function () {
+                    return {name: "Ca"}
+                },
+                methods: {
+                    changename: function () {
+                        this.name = "Ben";
+                    },
+                    originalname: function () {
+                        this.name = "Ca";
+                    }
+                }
+            });
+            var vm = new Vue({el: '#component_test'});
+            var vm1 = new Vue({el: '#component_test1'});
+        </script>
+    </body>
+</html>

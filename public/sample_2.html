@@ -10,7 +10,13 @@
                 {{firstname}}</h1>
             <h1>Lastname :
                 {{lastname}}</h1>
+
             <h1>{{mydetails()}}</h1>
+            <div v-html="mydetails()"></div>
+
+            <img src="{{imgsrc}}">
+            <img v-bind:src="imgsrc" width="300" height="250"/>
+
         </div>
         <script>
             var vm = new Vue({
@@ -18,11 +24,12 @@
                 data: {
                     firstname: "Anna",
                     lastname: "Nguyen",
-                    address: "QTSC"
+                    address: "<h1>Vue Js Template</h1>",
+                    imgsrc: "img/demo.jpg"
                 },
                 methods: {
                     mydetails: function () {
-                        return "I am " + this.firstname + " " + this.lastname;
+                        return "I am " + this.firstname + " " + this.lastname + this.address;
                     }
                 }
             })

@@ -1,0 +1,29 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Binding</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <style>
+            .active {
+                background: red;
+            }
+        </style>
+        <h1>Binding HTML Classes</h1>
+        <div id="classbinding">
+            <div v-bind:class="{active:isactive}">
+                <b>{{title}}</b>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#classbinding',
+                data: {
+                    title: "CLASS BINDING",
+                    isactive: true
+                }
+            });
+        </script>
+    </body>
+</html>

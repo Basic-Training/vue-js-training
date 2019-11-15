@@ -1,0 +1,33 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Reactive Interface</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <p style="font-size:25px;">Counter:
+                {{ products.id }}</p>
+            <button @click="products.id++" style="font-size:25px;">Click Me</button>
+        </div>
+        <script type="text/javascript">
+            var myproduct = {
+                "id": 1,
+                name: "book",
+                "price": "20.00"
+            };
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    counter: 1,
+                    products: myproduct
+                }
+            });
+            Vue.delete(myproduct, 'price');
+            console.log(vm);
+            vm.$watch('counter', function (nval, oval) {
+                alert('Counter is incremented :' + oval + ' to ' + nval + '!');
+            });
+        </script>
+    </body>
+</html>

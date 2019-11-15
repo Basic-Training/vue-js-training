@@ -1,0 +1,23 @@
+<!-- Tien Nguyen (nguyen.tien@mulodo.com) -->
+<html>
+    <head>
+        <title>Mulodo Vietnam :: VueJs Training :: Mixins</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="databinding"></div>
+        <script type="text/javascript">
+            var mixin = {
+                created: function () {
+                    console.log('mixin called')
+                }
+            }
+            new Vue({
+                mixins: [mixin],
+                created: function () {
+                    console.log('component called')
+                }
+            });
+        </script>
+    </body>
+</html>
