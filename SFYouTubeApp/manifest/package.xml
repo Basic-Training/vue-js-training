@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>VTM_YouTubeSearchController</members>
-		<members>VTM_YouTubeVideoController</members>
+		<members>VTM_YouTubeActivityController</members>
 		<members>VTM_YouTubeChannelController</members>
+		<members>VTM_YouTubeCountryController</members>
 		<members>VTM_YouTubePlaylistController</members>
+		<members>VTM_YouTubeSearchController</members>
+		<members>VTM_YouTubeVideoCateController</members>
+		<members>VTM_YouTubeVideoController</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>VTM_YouTubeActivityPage</members>
+		<members>VTM_YouTubeChannelPage</members>
+		<members>VTM_YouTubeCountryPage</members>
+		<members>VTM_YouTubePlaylistPage</members>
 		<members>VTM_YouTubeSearch2Page</members>
 		<members>VTM_YouTubeSearchPage</members>
+		<members>VTM_YouTubeVideoCatePage</members>
 		<members>VTM_YouTubeVideoPage</members>
-		<members>VTM_YouTubeChannelPage</members>
-		<members>VTM_YouTubePlaylistPage</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
+		<members>VTM_YOUTUBE_SETTINGS__c</members>
 		<members>VTM_YouTube_Video__c</members>
 		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>VTM_Resources</members>
+		<name>StaticResource</name>
 	</types>
 	<version>46.0</version>
 </Package>

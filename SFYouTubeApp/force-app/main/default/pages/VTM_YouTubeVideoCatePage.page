@@ -1,0 +1,18 @@
+<apex:page controller="VTM_YouTubeVideoCateController">
+    <apex:pageBlock rendered="{!items != null}">
+        <apex:pageBlockTable value="{!items}" var="item" rowClasses="odd,even" styleClass="tableClass">
+            <apex:column >
+                <apex:facet name="header">Channel Code</apex:facet>
+                <apex:outputLink value="/apex/VTM_YouTubeChannelPage?id={!item.snippet.channelId}" target="_blank">{!item.snippet.channelId}</apex:outputLink>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Category Name</apex:facet>
+                <apex:outputText value="{!item.snippet.title}"/>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Assignable</apex:facet>
+                <apex:outputText value="{!item.snippet.assignable}"/>
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

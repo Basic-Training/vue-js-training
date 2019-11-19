@@ -18,7 +18,6 @@ public with sharing class VTM_YouTubeVideoController {
     public void details() {
         if ((videoId == null) || (videoId == '')) {
             items = null;
-            //return null;
         }
         else {
             Http http = new Http();
@@ -36,21 +35,37 @@ public with sharing class VTM_YouTubeVideoController {
             } catch (System.CalloutException e){
                 System.debug('ERROR:' + e);
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
-                //return null;
             }
             
             Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
-            this.items = response.items;
-            
-            //return null;
-        }
-        
-        
+            this.items = response.items;            
+        }       
     }
 
-//--------------------------------------
-    
-    
+    public void listPopularVideos() {
+        /*
+        VIDEO_URL
+        Retrieve most popular videos
+        curl \
+        'https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&key=[YOUR_API_KEY]' \
+        --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
+        --header 'Accept: application/json' \
+        --compressed
+        https://developers.google.com/youtube/v3/guides/implementation/videos#videos-retrieve-most-popular-videos
+        */
+    }
+
+    public void listRelatedVideos() {
+        /*
+        SEARCH_URL
+        curl \
+  'https://www.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=wtLJPvx7-ys&type=video&key=[YOUR_API_KEY]' \
+  --header 'Authorization: Bearer [YOUR_ACCESS_TOKEN]' \
+  --header 'Accept: application/json' \
+  --compressed
+        */
+    }
+
     public class Response {
         public String kind { get; set; }
         public String etag { get; set; }

@@ -12,7 +12,10 @@
             <apex:column >
                 <apex:facet name="header">Channel</apex:facet>
                 <apex:outputLink value="/apex/VTM_YouTubeChannelPage?id={!item.snippet.channelId}" target="_blank">{!item.snippet.channelTitle}</apex:outputLink>
+                <br />
+                <apex:outputLink value="/apex/VTM_YouTubeActivityPage?id={!item.snippet.channelId}" target="_blank">Latest Activities</apex:outputLink>
             </apex:column>
+
         </apex:pageBlockTable>
     </apex:pageBlock>
 </apex:page>
