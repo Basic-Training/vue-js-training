@@ -1,0 +1,28 @@
+<apex:page standardStylesheets="false" showheader="false" sidebar="false">
+<!-- Preloader -->
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="object" id="object_one"></div>
+            <div class="object" id="object_two"></div>
+            <div class="object" id="object_three"></div>
+            <div class="object" id="object_four"></div>
+        </div>
+    </div>
+</div>
+<!--End off Preloader -->
+
+<div class="culmn">
+    <!-- Navigation -->
+    <apex:include pageName="EXP_home_body_nav"/>
+    <!-- Navigation -->
+    <!-- Main Content -->
+    <apex:include pageName="EXP_home_body_main"/>
+    <!-- Main Content -->
+    <!-- Main Footer -->
+    <footer id="contact" class="footer action-lage bg-black p-top-80">
+       <apex:include pageName="EXP_home_body_footer"/>
+    </footer>
+    <!-- Main Footer -->
+</div>
+</apex:page>
