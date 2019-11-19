@@ -11,6 +11,12 @@
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>VTM_Site_Common_HeaderPage</members>
+		<members>VTM_Site_Common_Nav</members>
+		<members>VTM_Site_Common_TopSearchPage</members>
+		<members>VTM_Site_Common_TopSocialPage</members>
+		<members>VTM_Site_Common_WelcomePage</members>
+		<members>VTM_Site_HomePage</members>
 		<members>VTM_YouTubeActivityPage</members>
 		<members>VTM_YouTubeChannelPage</members>
 		<members>VTM_YouTubeCountryPage</members>

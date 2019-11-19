@@ -3,7 +3,7 @@
     <apiVersion>47.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>VTM_YouTubeCountryPage</label>
+    <label>VTM_Site_Common_TopSocialPage</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
         <minorNumber>3</minorNumber>
