@@ -63,20 +63,18 @@ public with sharing class VTM_YouTubeVideoController {
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails,statistics' +
-            '&maxResults=10' +
+            '&maxResults=2' +
             '&chart=mostPopular' +
             '&regionCode=' + this.regionCode +
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
-        System.debug('endpoint === ' + endpoint);
         try {
             res = http.send(req);
         } catch (System.CalloutException e){
             System.debug('ERROR:' + e);
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
         }
-        System.debug('res.getBody === ' + res.getBody());
         Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
         this.items = response.items;
         return null;
@@ -91,7 +89,7 @@ public with sharing class VTM_YouTubeVideoController {
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet' +
-            '&maxResults=10' +
+            '&maxResults=2' +
             '&eventType=live' +
             '&type=video' +
             '&q=' + this.searchText +
@@ -130,15 +128,6 @@ public with sharing class VTM_YouTubeVideoController {
         public VTM_YouTubeVideoController.PageInfo pageInfo { get; set; }
         public VTM_YouTubeVideoController.Item[] items { get; set; }
     }
-    
-    public class ResponseLive {
-        public String kind { get; set; }
-        public String etag { get; set; }
-        public String nextPageToken { get; set; }
-        public String prevPageToken { get; set; }
-        public VTM_YouTubeVideoController.PageInfo pageInfo { get; set; }
-        public VTM_YouTubeVideoController.ItemLive[] items { get; set; }
-    }
 
     public class PageInfo {
         public Integer totalResults { get; set; }
@@ -154,13 +143,6 @@ public with sharing class VTM_YouTubeVideoController {
         public VTM_YouTubeVideoController.Statistics statistics { get; set; }
     }
 
-    public class ItemLive {
-        public String kind { get; set; }
-        public String etag { get; set; }
-        public String id { get; set; }
-        public VTM_YouTubeVideoController.Snippet snippet { get; set; }
-    }
-    
     public class Id {
         public String kind { get; set; }
         public String videoId { get; set; }
@@ -203,5 +185,37 @@ public with sharing class VTM_YouTubeVideoController {
         public String dislikeCount { get; set; }
         public String favoriteCount { get; set; }
         public String commentCount { get; set; }
+    }
+
+    public class ResponseLive {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public String nextPageToken { get; set; }
+        public String prevPageToken { get; set; }
+        public VTM_YouTubeVideoController.PageInfo pageInfo { get; set; }
+        public VTM_YouTubeVideoController.ItemLive[] items { get; set; }
+    }
+
+    public class ItemLive {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public String id { get; set; }
+        public VTM_YouTubeVideoController.SnippetLive snippet { get; set; }
+    }
+
+    public class SnippetLive {
+        public Datetime publishedAt { get; set; }
+        public String channelId { get; set; }
+        public String title { get; set; }
+        public String description { get; set; }
+        public VTM_YouTubeVideoController.ThumbnailsLive thumbnails { get; set; }
+        public String channelTitle { get; set; }
+        public String liveBroadcastContent { get; set; }
+    }
+
+    public class ThumbnailsLive {
+        //public YouTubeSearchController.Thumbnail default { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail medium { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail high { get; set; }
     }
 }
