@@ -2,11 +2,18 @@ public with sharing class VTM_YouTubeVideoController {
     
     public String searchText { get; set; }
     public VTM_YouTubeVideoController.Item[] items { get; set; }
+    public String regionCode {
+        get;
+        // *** setter is NOT being called ***
+        set {
+            regionCode = value;
+            System.debug('value: '+value);
+        }
+    }
     
     private String SEARCH_URL { get; set; }
     private String API_KEY { get; set; }
     private String videoId { get; set; }
-    private String regionCode { get; set; }
 
     public VTM_YouTubeVideoController() {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
@@ -43,7 +50,7 @@ public with sharing class VTM_YouTubeVideoController {
         }       
     }
 
-    public void listPopularVideosByCountry() {
+    public PageReference listPopularVideosByCountry() {
         /*
         VIDEO_URL
         Retrieve most popular videos
@@ -55,7 +62,7 @@ public with sharing class VTM_YouTubeVideoController {
         https://developers.google.com/youtube/v3/guides/implementation/videos#videos-retrieve-most-popular-videos
         */
 
-        regionCode = ApexPages.currentPage().getParameters().get('regionCode');
+        //regionCode = ApexPages.currentPage().getParameters().get('regionCode');
 
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -63,10 +70,11 @@ public with sharing class VTM_YouTubeVideoController {
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails,statistics' +
             '&chart=mostPopular' +
-            '&regionCode=' + regionCode +
+            '&regionCode=' + this.regionCode +
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
+        System.debug('endpoint === ' + endpoint);
         try {
             res = http.send(req);
             System.debug(res.getBody());
@@ -77,6 +85,7 @@ public with sharing class VTM_YouTubeVideoController {
         
         Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
         this.items = response.items;
+        return null;
     }
 
     public void listRelatedVideos() {
@@ -93,8 +102,8 @@ public with sharing class VTM_YouTubeVideoController {
     public class Response {
         public String kind { get; set; }
         public String etag { get; set; }
-        //public String nextPageToken { get; set; }
-        //public String prevPageToken { get; set; }
+        public String nextPageToken { get; set; }
+        public String prevPageToken { get; set; }
         public VTM_YouTubeVideoController.PageInfo pageInfo { get; set; }
         public VTM_YouTubeVideoController.Item[] items { get; set; }
     }
@@ -108,7 +117,6 @@ public with sharing class VTM_YouTubeVideoController {
         public String kind { get; set; }
         public String etag { get; set; }
         public String id { get; set; }
-        //public VTM_YouTubeVideoController.Id id { get; set; }
         public VTM_YouTubeVideoController.Snippet snippet { get; set; }
     }
     
@@ -131,6 +139,8 @@ public with sharing class VTM_YouTubeVideoController {
         //public YouTubeSearchController.Thumbnail default { get; set; }
         public VTM_YouTubeVideoController.Thumbnail medium { get; set; }
         public VTM_YouTubeVideoController.Thumbnail high { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail standard { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail maxres { get; set; }
     }
     
     public class Thumbnail {
