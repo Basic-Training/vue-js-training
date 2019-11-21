@@ -24,6 +24,10 @@
         <apex:include pagename="VTM_Site_Most_Popular_Video"/>
         <!-- ***** Latest Episodes Area End ***** -->
 
+        <!-- ***** live broadcasts Area Start ***** -->
+        <apex:include pagename="VTM_Site_Live_Broadcast"/>
+        <!-- ***** live broadcasts Area End ***** -->
+
         <!-- ***** Featured Guests Area Start ***** -->
         <apex:include pagename="VTM_Site_Most_Popular_Artist"/>
         <!-- ***** Featured Guests Area End ***** -->
