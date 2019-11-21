@@ -1,73 +1,92 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false">
     <header class="header-area">
-        <!-- Main Header Start -->
-        <div class="main-header-area">
-          <div class="classy-nav-container breakpoint-off">
+    <!-- Main Header Start -->
+    <div class="main-header-area">
+        <div class="classy-nav-container breakpoint-off">
             <!-- Classy Menu -->
             <nav class="classy-navbar justify-content-between" id="pocaNav">
-    
-              <!-- Logo -->
-              <a class="nav-brand" href="index.html"><img src="./img/core-img/yt.png" width="70" alt="Youtube Videos"/></a>
-    
-              <!-- Navbar Toggler -->
-              <div class="classy-navbar-toggler">
-                <span class="navbarToggler"><span></span><span></span><span></span></span>
-              </div>
-    
-              <!-- Menu -->
-              <div class="classy-menu">
-    
-                <!-- Menu Close Button -->
-                <div class="classycloseIcon">
-                  <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+
+                <!-- Logo -->
+                <a class="nav-brand" href="index.html">
+                  <apex:image url="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/img/core-img/yt.png')}" width="70" alt="Youtube Videos"/>
+                </a>
+
+                <!-- Navbar Toggler -->
+                <div class="classy-navbar-toggler">
+                    <span class="navbarToggler">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
                 </div>
-    
-                <!-- Nav Start -->
-                <div class="classynav">
-                  <ul id="nav">
-                    <li class="current-item"><a href="#">Home</a></li>
-                    <li><a href="#">All Countries</a></li>
-                    <li><a href="#">Featured</a>
-                      <ul class="dropdown">
-                        <li><a href="#">Featured Categories</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Item 1</a></li>
-                            <li><a href="#">Item 1</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="#">Featured Playlists</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Item 1</a></li>
-                            <li><a href="#">Item 1</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="#">Featured Videos</a></li>
-                      </ul>
-                    </li>
-                    </ul>
-    
-                  <!-- Top Search Area -->
-                  <div class="top-search-area">
-                    <form action="index.html" method="post">
-                      <input type="search" name="top-search-bar" class="form-control" placeholder="Search and hit enter..."/>
-                      <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                  </div>
-    
-                  <!-- Top Social Area -->
-                  <div class="top-social-area">
-                    <a href="#" class="fa fa-facebook" aria-hidden="true"></a>
-                    <a href="#" class="fa fa-twitter" aria-hidden="true"></a>
-                    <a href="#" class="fa fa-pinterest" aria-hidden="true"></a>
-                    <a href="#" class="fa fa-instagram" aria-hidden="true"></a>
-                    <a href="#" class="fa fa-youtube-play" aria-hidden="true"></a>
-                  </div>
-    
+
+                <!-- Menu -->
+                <div class="classy-menu">
+
+                    <!-- Menu Close Button -->
+                    <div class="classycloseIcon">
+                        <div class="cross-wrap">
+                            <span class="top"></span>
+                            <span class="bottom"></span>
+                        </div>
+                    </div>
+
+                    <!-- Nav Start -->
+                    <div class="classynav">
+                        <ul id="nav">
+                            <li class="current-item">
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">All Countries</a>
+                            </li>
+                            <li>
+                                <a href="#">Featured</a>
+                                <ul class="dropdown">
+                                    <li>
+                                        <a href="#">Featured Categories</a>
+                                        <ul class="dropdown">
+                                            <li>
+                                                <a href="#">Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Item 1</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Featured Playlists</a>
+                                        <ul class="dropdown">
+                                            <li>
+                                                <a href="#">Item 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Item 1</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Featured Videos</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <!-- Top Search Area -->
+                        <div class="top-search-area">
+                            <apex:include pagename="VTM_Site_Common_TopSearch"/>
+                        </div>
+
+                        <!-- Top Social Area -->
+                        <div class="top-social-area">
+                            <apex:include pagename="VTM_Site_Common_TopSocial"/>
+                        </div>
+
+                    </div>
+                    <!-- Nav End -->
                 </div>
-                <!-- Nav End -->
-              </div>
             </nav>
-          </div>
         </div>
-      </header>
+    </div>
+</header>
 </apex:page>

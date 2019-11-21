@@ -6,6 +6,7 @@ public with sharing class VTM_YouTubeVideoController {
     private String SEARCH_URL { get; set; }
     private String API_KEY { get; set; }
     private String videoId { get; set; }
+    private String regionCode { get; set; }
 
     public VTM_YouTubeVideoController() {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
@@ -42,7 +43,7 @@ public with sharing class VTM_YouTubeVideoController {
         }       
     }
 
-    public void listPopularVideos() {
+    public void listPopularVideosByCountry() {
         /*
         VIDEO_URL
         Retrieve most popular videos
@@ -53,6 +54,29 @@ public with sharing class VTM_YouTubeVideoController {
         --compressed
         https://developers.google.com/youtube/v3/guides/implementation/videos#videos-retrieve-most-popular-videos
         */
+
+        regionCode = ApexPages.currentPage().getParameters().get('regionCode');
+
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        HttpResponse res = null;
+        String endpoint = SEARCH_URL +
+            '?part=snippet,contentDetails,statistics' +
+            '&chart=mostPopular' +
+            '&regionCode=' + regionCode +
+            '&key=' + API_KEY;
+        req.setEndPoint(endpoint);
+        req.setMethod('GET');
+        try {
+            res = http.send(req);
+            System.debug(res.getBody());
+        } catch (System.CalloutException e){
+            System.debug('ERROR:' + e);
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
+        }
+        
+        Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
+        this.items = response.items;
     }
 
     public void listRelatedVideos() {

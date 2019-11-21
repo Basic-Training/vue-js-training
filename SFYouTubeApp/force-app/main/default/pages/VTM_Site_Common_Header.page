@@ -1,15 +1,17 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false">
     <meta charset="UTF-8"/>
-    <meta name="description" content="Poca - Podcast &amp; Audio Template"/>
+    <meta name="description" content="Music &amp; Video Website"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
     <!-- Title -->
-    <title>Poca - Podcast &amp; Audio Template</title>
-  
+    <title>Music Website</title>
+
     <!-- Favicon -->
     <link rel="icon" href="./img/core-img/favicon.ico"/>
-  
+
     <!-- Core Stylesheet -->
     <apex:stylesheet value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/style.css')}"/>
 </apex:page>
