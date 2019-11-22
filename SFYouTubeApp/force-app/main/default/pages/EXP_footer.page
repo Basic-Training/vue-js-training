@@ -1,9 +1,0 @@
-<apex:page standardStylesheets="false" showheader="false" sidebar="false">
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/vendor/jquery-1.11.2.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/vendor/bootstrap.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/jquery.magnific-popup.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/jquery.easing.1.3.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/bootsnav.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/plugins.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.EXP_Resources, 'assets/js/main.js')}"/>
-</apex:page>

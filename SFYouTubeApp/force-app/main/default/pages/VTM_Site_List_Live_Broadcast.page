@@ -25,8 +25,8 @@
                   <apex:param name="searchText" value="music" assignTo="{!searchText}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listLiveBroadcasts}" value="Salesforce" styleClass="btn" id="btn23" reRender="listLiveBroadcasts">
-                  <apex:param name="searchText" value="salesforce" assignTo="{!searchText}"/>
+              <apex:commandButton action="{!listLiveBroadcasts}" value="Trailer" styleClass="btn" id="btn23" reRender="listLiveBroadcasts">
+                  <apex:param name="searchText" value="trailer" assignTo="{!searchText}"/>
               </apex:commandButton>
 
               <apex:commandButton action="{!listLiveBroadcasts}" value="Movie" styleClass="btn" id="btn24" reRender="listLiveBroadcasts">

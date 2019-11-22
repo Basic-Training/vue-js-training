@@ -1,0 +1,90 @@
+<apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listRecentVideos}">
+    <section class="poca-latest-epiosodes section-padding-80">
+        <div class="container">
+          <div class="row">
+            <!-- Section Heading -->
+            <div class="col-12">
+              <div class="section-heading text-center">
+                <h2>Recent Videos</h2>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Projects Menu -->
+        <div class="container">
+          <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="text-center portfolio-menu">
+              <apex:form >
+              <apex:commandButton action="{!listRecentVideos}" value="News" styleClass="btn active" id="btn31" reRender="listRecentVideos">
+                  <apex:param name="searchText" value="news" assignTo="{!searchText}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listRecentVideos}" value="Music" styleClass="btn" id="btn32" reRender="listRecentVideos">
+                  <apex:param name="searchText" value="music" assignTo="{!searchText}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listRecentVideos}" value="Trailer" styleClass="btn" id="btn33" reRender="listRecentVideos">
+                  <apex:param name="searchText" value="trailer" assignTo="{!searchText}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listRecentVideos}" value="Movie" styleClass="btn" id="btn34" reRender="listRecentVideos">
+                  <apex:param name="searchText" value="movie" assignTo="{!searchText}"/>
+              </apex:commandButton>
+              </apex:form>
+            </div>
+          </div>
+        </div>
+        
+        <apex:pageBlock id="listRecentVideos">
+        <div class="container">
+          <div class="row poca-portfolio">
+            <!-- List Vietnam Videos -->
+            <apex:repeat value="{!itemsRecent}" var="itemRecent" id="theItemRecent">
+                <!-- Single gallery Item -->
+                <div class="col-12 col-md-6 single_gallery_item {!searchText} wow fadeInUp" data-wow-delay="0.2s">
+                    <!-- Welcome Music Area -->
+                    <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
+                      <div class="poca-music-thumbnail">
+                        <apex:image url="{!itemRecent.snippet.thumbnails.high.url}" alt="{!itemRecent.snippet.title}" height="300"/>
+                      </div>
+                      <div class="poca-music-content text-center">
+                        <span class="music-published-date mb-2">{!itemRecent.snippet.publishedAt}</span>
+                        <h2>{!itemRecent.snippet.title}</h2>
+                        <div class="music-meta-data">
+                          <p>By <a href="#" class="music-author">{!itemRecent.snippet.channelTitle}</a></p>
+                        </div>
+                        <!-- Music Player -->
+                        <div class="poca-music-player">
+                          <audio preload="auto" controls="controls">
+                            <source src="{!itemRecent.contentDetails.upload.videoId}"/>
+                          </audio>
+                        </div>
+                        <!-- Likes, Share & Download -->
+                        <div class="likes-share-download d-flex align-items-center justify-content-between">
+                          <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (0)</a>
+                          <div>
+                            <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Comment(0)</a>
+                            <a href="#"><i class="fa fa-download" aria-hidden="true"></i> View (0)</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Single gallery Item -->
+            </apex:repeat>
+            <!-- List Vietnam Videos -->
+          </div>
+        </div>
+      </apex:pageBlock>
+    
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <a href="#" class="btn poca-btn mt-70">Load More</a>
+            </div>
+          </div>
+        </div>
+      </section>
+</apex:page>

@@ -21,15 +21,19 @@
         <!-- ***** Welcome Area End ***** -->
         
         <!-- ***** Latest Episodes Area Start ***** -->
-        <apex:include pagename="VTM_Site_Most_Popular_Video"/>
+        <apex:include pagename="VTM_Site_List_Most_Popular_Video"/>
         <!-- ***** Latest Episodes Area End ***** -->
 
-        <!-- ***** live broadcasts Area Start ***** -->
-        <apex:include pagename="VTM_Site_Live_Broadcast"/>
-        <!-- ***** live broadcasts Area End ***** -->
+        <!-- ***** Live broadcasts Area Start ***** -->
+        <apex:include pagename="VTM_Site_List_Live_Broadcast"/>
+        <!-- ***** Live broadcasts Area End ***** -->
+
+        <!-- ***** Recent videos Area Start ***** -->
+        <apex:include pagename="VTM_Site_List_Recent_Video"/>
+        <!-- ***** Recent videos Area End ***** -->
 
         <!-- ***** Featured Guests Area Start ***** -->
-        <apex:include pagename="VTM_Site_Most_Popular_Artist"/>
+        <apex:include pagename="VTM_Site_List_Most_Popular_Artist"/>
         <!-- ***** Featured Guests Area End ***** -->
 
         <!-- ***** Newsletter Area Start ***** -->

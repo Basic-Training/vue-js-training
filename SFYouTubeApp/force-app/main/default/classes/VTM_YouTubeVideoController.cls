@@ -22,16 +22,10 @@ public with sharing class VTM_YouTubeVideoController {
             regionCode = value;
         }
     }
-    public VTM_YouTubeVideoController.Item[] items { get; set; }
-    public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
-    
-    private String SEARCH_URL { get; set; }
-    private String API_KEY { get; set; }
-    private String videoId { get; set; }
     private Integer resultsPerPage { 
         get {
             if (resultsPerPage == null) {
-                resultsPerPage = 10;
+                resultsPerPage = 4;
             }
             return resultsPerPage;
         }
@@ -39,6 +33,13 @@ public with sharing class VTM_YouTubeVideoController {
             resultsPerPage = value;
         }
     }
+    public VTM_YouTubeVideoController.Item[] items { get; set; }
+    public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
+    public VTM_YouTubeVideoController.ItemRecent[] itemsRecent { get; set; }
+    
+    private String SEARCH_URL { get; set; }
+    private String API_KEY { get; set; }
+    private String videoId { get; set; }
 
     public VTM_YouTubeVideoController() {
         videoId = ApexPages.currentPage().getParameters().get('id');
@@ -131,8 +132,38 @@ public with sharing class VTM_YouTubeVideoController {
         }
         
         ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
-        System.debug('response.items === ' + response.items);
         this.itemsLive = response.items;
+        return null;
+    }
+
+    // list recent videos
+    public PageReference listRecentVideos() {
+        VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
+        SEARCH_URL = youTubeSettings.ACTIVITY_URL__c;
+        API_KEY = youTubeSettings.API_KEY__c;
+
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        HttpResponse res = null;
+        String endpoint = SEARCH_URL +
+            '?part=snippet,contentDetails' +
+            '&maxResults=' + resultsPerPage +
+            '&home=true' +
+            '&regionCode=' + this.regionCode +
+            '&key=' + API_KEY;
+        req.setEndPoint(endpoint);
+        req.setMethod('GET');
+        System.debug('endpoint === ' + endpoint);
+        try {
+            res = http.send(req);
+        } catch (System.CalloutException e){
+            System.debug('ERROR:' + e);
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
+        }
+        
+        ResponseRecent response = (ResponseRecent)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseRecent.class);
+        System.debug('response.items === ' + response.items);
+        this.itemsRecent = response.items;
         return null;
     }
 
@@ -146,6 +177,8 @@ public with sharing class VTM_YouTubeVideoController {
   --compressed
         */
     }
+
+    // list most popular videos
 
     public class Response {
         public String kind { get; set; }
@@ -214,6 +247,8 @@ public with sharing class VTM_YouTubeVideoController {
         public String commentCount { get; set; }
     }
 
+    // list live events
+
     public class ResponseLive {
         public String kind { get; set; }
         public String etag { get; set; }
@@ -250,4 +285,51 @@ public with sharing class VTM_YouTubeVideoController {
         public VTM_YouTubeVideoController.Thumbnail medium { get; set; }
         public VTM_YouTubeVideoController.Thumbnail high { get; set; }
     }
+
+    // list recent videos
+
+    public class ResponseRecent {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public String nextPageToken { get; set; }
+        public String prevPageToken { get; set; }
+        public VTM_YouTubeVideoController.PageInfo pageInfo { get; set; }
+        public VTM_YouTubeVideoController.ItemRecent[] items { get; set; }
+    }
+
+    public class ItemRecent {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public String id { get; set; }
+        public VTM_YouTubeVideoController.SnippetRecent snippet { get; set; }
+        public VTM_YouTubeVideoController.contentDetailsRecent contentDetails { get; set; }
+
+    }
+
+    public class SnippetRecent {
+        public Datetime publishedAt { get; set; }
+        public String channelId { get; set; }
+        public String title { get; set; }
+        public String description { get; set; }
+        public VTM_YouTubeVideoController.ThumbnailsRecent thumbnails { get; set; }
+        public String channelTitle { get; set; }
+        public String type { get; set; }
+    }
+
+    public class ThumbnailsRecent {
+        //public YouTubeSearchController.Thumbnail default { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail medium { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail high { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail standard { get; set; }
+        public VTM_YouTubeVideoController.Thumbnail maxres { get; set; }
+    }
+
+    public class contentDetailsRecent {
+        public VTM_YouTubeVideoController.UploadRecent upload { get; set; }
+    }
+
+    public class UploadRecent {
+        public String videoId { get; set; }
+    }
+
 }
