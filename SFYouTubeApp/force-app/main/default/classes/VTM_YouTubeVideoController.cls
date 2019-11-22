@@ -22,6 +22,17 @@ public with sharing class VTM_YouTubeVideoController {
             regionCode = value;
         }
     }
+    public String channelId {
+        get {
+            if (channelId == null) {
+                channelId = 'UC6zhI71atP7YLoZyIyCIGNw';
+            }
+            return channelId;
+        }
+        set {
+            channelId = value;
+        }
+    }
     private Integer resultsPerPage { 
         get {
             if (resultsPerPage == null) {
@@ -148,8 +159,7 @@ public with sharing class VTM_YouTubeVideoController {
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails' +
             '&maxResults=' + resultsPerPage +
-            '&home=true' +
-            '&regionCode=' + this.regionCode +
+            '&channelId=' + this.channelId +
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');

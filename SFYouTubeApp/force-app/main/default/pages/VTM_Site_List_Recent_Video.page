@@ -17,20 +17,20 @@
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
               <apex:form >
-              <apex:commandButton action="{!listRecentVideos}" value="News" styleClass="btn active" id="btn31" reRender="listRecentVideos">
-                  <apex:param name="searchText" value="news" assignTo="{!searchText}"/>
+              <apex:commandButton action="{!listRecentVideos}" value="Dave and Ava" styleClass="btn active" id="btn31" reRender="listRecentVideos">
+                  <apex:param name="channelId" value="UC6zhI71atP7YLoZyIyCIGNw" assignTo="{!channelId}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listRecentVideos}" value="Music" styleClass="btn" id="btn32" reRender="listRecentVideos">
-                  <apex:param name="searchText" value="music" assignTo="{!searchText}"/>
+              <apex:commandButton action="{!listRecentVideos}" value="Cocomelon" styleClass="btn" id="btn32" reRender="listRecentVideos">
+                  <apex:param name="channelId" value="UCbCmjCuTUZos6Inko4u57UQ" assignTo="{!channelId}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listRecentVideos}" value="Trailer" styleClass="btn" id="btn33" reRender="listRecentVideos">
-                  <apex:param name="searchText" value="trailer" assignTo="{!searchText}"/>
+              <apex:commandButton action="{!listRecentVideos}" value="Brandnew" styleClass="btn" id="btn33" reRender="listRecentVideos">
+                  <apex:param name="channelId" value="UCAkWpyeieFjzS7GzSJMArhQ" assignTo="{!channelId}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listRecentVideos}" value="Movie" styleClass="btn" id="btn34" reRender="listRecentVideos">
-                  <apex:param name="searchText" value="movie" assignTo="{!searchText}"/>
+              <apex:commandButton action="{!listRecentVideos}" value="Jackson" styleClass="btn" id="btn34" reRender="listRecentVideos">
+                  <apex:param name="channelId" value="UCy0F6thcJPzPFt_70Q7_x2g" assignTo="{!channelId}"/>
               </apex:commandButton>
               </apex:form>
             </div>
@@ -43,7 +43,7 @@
             <!-- List Vietnam Videos -->
             <apex:repeat value="{!itemsRecent}" var="itemRecent" id="theItemRecent">
                 <!-- Single gallery Item -->
-                <div class="col-12 col-md-6 single_gallery_item {!searchText} wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-12 col-md-6 single_gallery_item {!channelId} wow fadeInUp" data-wow-delay="0.2s">
                     <!-- Welcome Music Area -->
                     <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
                       <div class="poca-music-thumbnail">

@@ -33,7 +33,7 @@
         <!-- ***** Recent videos Area End ***** -->
 
         <!-- ***** Featured Guests Area Start ***** -->
-        <apex:include pagename="VTM_Site_List_Most_Popular_Artist"/>
+        <!--apex:include pagename="VTM_Site_List_Most_Popular_Artist"/-->
         <!-- ***** Featured Guests Area End ***** -->
 
         <!-- ***** Newsletter Area Start ***** -->
