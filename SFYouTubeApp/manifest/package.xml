@@ -11,14 +11,21 @@
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>EXP_footer</members>
+		<members>EXP_header</members>
+		<members>EXP_home</members>
+		<members>EXP_home_body</members>
+		<members>VTM_Site_Common_Footer</members>
 		<members>VTM_Site_Common_Header</members>
 		<members>VTM_Site_Common_Nav</members>
 		<members>VTM_Site_Common_TopSearch</members>
 		<members>VTM_Site_Common_TopSocial</members>
 		<members>VTM_Site_Common_Welcome</members>
-		<members>VTM_Site_Common_Footer</members>
 		<members>VTM_Site_HomePage</members>
-
+		<members>VTM_Site_Live_Broadcast</members>
+		<members>VTM_Site_Most_Popular_Artist</members>
+		<members>VTM_Site_Most_Popular_Video</members>
+		<members>VTM_Site_Newsletter</members>
 		<members>VTM_YouTubeActivityPage</members>
 		<members>VTM_YouTubeChannelPage</members>
 		<members>VTM_YouTubeCountryPage</members>
@@ -27,11 +34,6 @@
 		<members>VTM_YouTubeSearchPage</members>
 		<members>VTM_YouTubeVideoCatePage</members>
 		<members>VTM_YouTubeVideoPage</members>
-
-		<members>EXP_home</members>
-		<members>EXP_header</members>
-		<members>EXP_home_body</members>
-		<members>EXP_footer</members>
 		<name>ApexPage</name>
 	</types>
 	<types>

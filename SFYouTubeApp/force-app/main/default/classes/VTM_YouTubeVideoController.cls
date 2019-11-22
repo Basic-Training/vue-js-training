@@ -1,8 +1,16 @@
 public with sharing class VTM_YouTubeVideoController {
     
-    public String searchText { get; set; }
-    public VTM_YouTubeVideoController.Item[] items { get; set; }
-    public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
+    public String searchText {
+        get {
+            if (searchText == null) {
+                searchText = 'news';
+            }
+            return searchText;
+        }
+        set {
+            searchText = value;
+        }
+    }
     public String regionCode {
         get {
             if (regionCode == null) {
@@ -14,15 +22,25 @@ public with sharing class VTM_YouTubeVideoController {
             regionCode = value;
         }
     }
+    public VTM_YouTubeVideoController.Item[] items { get; set; }
+    public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
     
     private String SEARCH_URL { get; set; }
     private String API_KEY { get; set; }
     private String videoId { get; set; }
+    private Integer resultsPerPage { 
+        get {
+            if (resultsPerPage == null) {
+                resultsPerPage = 10;
+            }
+            return resultsPerPage;
+        }
+        set {
+            resultsPerPage = value;
+        }
+    }
 
     public VTM_YouTubeVideoController() {
-        VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
-        //SEARCH_URL = youTubeSettings.VIDEO_URL__c;
-        API_KEY = youTubeSettings.API_KEY__c;
         videoId = ApexPages.currentPage().getParameters().get('id');
         details();
     }
@@ -32,6 +50,10 @@ public with sharing class VTM_YouTubeVideoController {
             items = null;
         }
         else {
+            VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
+            SEARCH_URL = youTubeSettings.VIDEO_URL__c;
+            API_KEY = youTubeSettings.API_KEY__c;
+
             Http http = new Http();
             HttpRequest req = new HttpRequest();
             HttpResponse res = null;
@@ -54,16 +76,18 @@ public with sharing class VTM_YouTubeVideoController {
         }       
     }
 
+    // List most popular videos on Homepage
     public PageReference listPopularVideosByCountry() {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
         SEARCH_URL = youTubeSettings.VIDEO_URL__c;
+        API_KEY = youTubeSettings.API_KEY__c;
 
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails,statistics' +
-            '&maxResults=2' +
+            '&maxResults=' + resultsPerPage +
             '&chart=mostPopular' +
             '&regionCode=' + this.regionCode +
             '&key=' + API_KEY;
@@ -80,16 +104,18 @@ public with sharing class VTM_YouTubeVideoController {
         return null;
     }
 
+    // List live events on Homepage
     public PageReference listLiveBroadcasts() {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
         SEARCH_URL = youTubeSettings.SEARCH_URL__c;
+        API_KEY = youTubeSettings.API_KEY__c;
 
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet' +
-            '&maxResults=2' +
+            '&maxResults=' + resultsPerPage +
             '&eventType=live' +
             '&type=video' +
             '&q=' + this.searchText +
@@ -103,8 +129,9 @@ public with sharing class VTM_YouTubeVideoController {
             System.debug('ERROR:' + e);
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
         }
-        System.debug('res.getBody === ' + res.getBody());
+        
         ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
+        System.debug('response.items === ' + response.items);
         this.itemsLive = response.items;
         return null;
     }
@@ -199,8 +226,13 @@ public with sharing class VTM_YouTubeVideoController {
     public class ItemLive {
         public String kind { get; set; }
         public String etag { get; set; }
-        public String id { get; set; }
+        public VTM_YouTubeVideoController.IdVideoLive id { get; set; }
         public VTM_YouTubeVideoController.SnippetLive snippet { get; set; }
+    }
+
+    public class IdVideoLive {
+        public String kind { get; set; }
+        public String videoId { get; set; }
     }
 
     public class SnippetLive {

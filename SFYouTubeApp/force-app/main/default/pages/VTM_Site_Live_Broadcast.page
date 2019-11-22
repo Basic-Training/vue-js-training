@@ -16,20 +16,20 @@
         <div class="container">
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
-              <apex:form>
-              <apex:commandButton action="{!listLiveBroadcasts}" value="News" styleClass="btn active" id="btn1" reRender="listLiveBroadcasts">
+              <apex:form >
+              <apex:commandButton action="{!listLiveBroadcasts}" value="News" styleClass="btn active" id="btn21" reRender="listLiveBroadcasts">
                   <apex:param name="searchText" value="news" assignTo="{!searchText}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listLiveBroadcasts}" value="Music" styleClass="btn" id="btn2" reRender="listLiveBroadcasts">
+              <apex:commandButton action="{!listLiveBroadcasts}" value="Music" styleClass="btn" id="btn22" reRender="listLiveBroadcasts">
                   <apex:param name="searchText" value="music" assignTo="{!searchText}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listLiveBroadcasts}" value="Salesforce" styleClass="btn" id="btn3" reRender="listLiveBroadcasts">
+              <apex:commandButton action="{!listLiveBroadcasts}" value="Salesforce" styleClass="btn" id="btn23" reRender="listLiveBroadcasts">
                   <apex:param name="searchText" value="salesforce" assignTo="{!searchText}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listLiveBroadcasts}" value="Movie" styleClass="btn" id="btn4" reRender="listLiveBroadcasts">
+              <apex:commandButton action="{!listLiveBroadcasts}" value="Movie" styleClass="btn" id="btn24" reRender="listLiveBroadcasts">
                   <apex:param name="searchText" value="movie" assignTo="{!searchText}"/>
               </apex:commandButton>
               </apex:form>
@@ -47,7 +47,7 @@
                     <!-- Welcome Music Area -->
                     <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
                       <div class="poca-music-thumbnail">
-                        <apex:image url="{!itemLive.snippet.thumbnails.high.url}" alt=""/>
+                        <apex:image url="{!itemLive.snippet.thumbnails.high.url}" alt="{!itemLive.snippet.title}" height="300"/>
                       </div>
                       <div class="poca-music-content text-center">
                         <span class="music-published-date mb-2">{!itemLive.snippet.publishedAt}</span>
@@ -58,7 +58,7 @@
                         <!-- Music Player -->
                         <div class="poca-music-player">
                           <audio preload="auto" controls="controls">
-                            <source src="audio/dummy-audio.mp3"/>
+                            <source src="{!itemLive.id.videoId}"/>
                           </audio>
                         </div>
                         <!-- Likes, Share & Download -->

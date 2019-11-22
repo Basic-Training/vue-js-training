@@ -16,20 +16,20 @@
         <div class="container">
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
-              <apex:form>
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="Vietnam" styleClass="btn active" id="btn1" reRender="listPopularVideo">
+              <apex:form >
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="Vietnam" styleClass="btn active" id="btn11" reRender="listPopularVideo">
                   <apex:param name="regionCode" value="VN" assignTo="{!regionCode}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="United States" styleClass="btn" id="btn2" reRender="listPopularVideo">
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="United States" styleClass="btn" id="btn12" reRender="listPopularVideo">
                   <apex:param name="regionCode" value="US" assignTo="{!regionCode}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="France" styleClass="btn" id="btn3" reRender="listPopularVideo">
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="France" styleClass="btn" id="btn13" reRender="listPopularVideo">
                   <apex:param name="regionCode" value="FR" assignTo="{!regionCode}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="Italia" styleClass="btn" id="btn4" reRender="listPopularVideo">
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="Italia" styleClass="btn" id="btn14" reRender="listPopularVideo">
                   <apex:param name="regionCode" value="IT" assignTo="{!regionCode}"/>
               </apex:commandButton>
               </apex:form>
@@ -47,7 +47,7 @@
                     <!-- Welcome Music Area -->
                     <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
                       <div class="poca-music-thumbnail">
-                        <apex:image url="{!item.snippet.thumbnails.high.url}" alt=""/>
+                        <apex:image url="{!item.snippet.thumbnails.high.url}" alt="{!item.snippet.title}" height="300"/>
                       </div>
                       <div class="poca-music-content text-center">
                         <span class="music-published-date mb-2">{!item.snippet.publishedAt}</span>
@@ -58,7 +58,7 @@
                         <!-- Music Player -->
                         <div class="poca-music-player">
                           <audio preload="auto" controls="controls">
-                            <source src="audio/dummy-audio.mp3"/>
+                            <source src="{!item.id}"/>
                           </audio>
                         </div>
                         <!-- Likes, Share & Download -->
