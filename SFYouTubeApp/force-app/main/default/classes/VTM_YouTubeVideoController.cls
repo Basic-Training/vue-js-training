@@ -44,6 +44,40 @@ public with sharing class VTM_YouTubeVideoController {
             resultsPerPage = value;
         }
     }
+    public String pageTokenPopular {
+        get {
+            if (pageTokenPopular == null) {
+                pageTokenPopular = '';
+            }
+            return pageTokenPopular;
+        }
+        set {
+            pageTokenPopular = value;
+        }
+    }
+    public String pageTokenLive {
+        get {
+            if (pageTokenLive == null) {
+                pageTokenLive = '';
+            }
+            return pageTokenLive;
+        }
+        set {
+            pageTokenLive = value;
+        }
+    }
+    public String pageTokenRecent {
+        get {
+            if (pageTokenRecent == null) {
+                pageTokenRecent = '';
+            }
+            return pageTokenRecent;
+        }
+        set {
+            pageTokenRecent = value;
+        }
+    }
+
     public VTM_YouTubeVideoController.Item[] items { get; set; }
     public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
     public VTM_YouTubeVideoController.ItemRecent[] itemsRecent { get; set; }
@@ -101,6 +135,7 @@ public with sharing class VTM_YouTubeVideoController {
             '?part=snippet,contentDetails,statistics' +
             '&maxResults=' + resultsPerPage +
             '&chart=mostPopular' +
+            '&pageToken=' + pageTokenPopular +
             '&regionCode=' + this.regionCode +
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
@@ -113,6 +148,7 @@ public with sharing class VTM_YouTubeVideoController {
         }
         Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
         this.items = response.items;
+        this.pageTokenPopular = response.nextPageToken;
         return null;
     }
 
@@ -144,6 +180,7 @@ public with sharing class VTM_YouTubeVideoController {
         
         ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
         this.itemsLive = response.items;
+        this.pageTokenLive = response.nextPageToken;
         return null;
     }
 
@@ -174,6 +211,7 @@ public with sharing class VTM_YouTubeVideoController {
         ResponseRecent response = (ResponseRecent)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseRecent.class);
         System.debug('response.items === ' + response.items);
         this.itemsRecent = response.items;
+        this.pageTokenRecent = response.nextPageToken;
         return null;
     }
 

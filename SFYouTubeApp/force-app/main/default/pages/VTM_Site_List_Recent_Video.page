@@ -1,4 +1,5 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listRecentVideos}">
+  <apex:form>
     <section class="poca-latest-epiosodes section-padding-80">
         <div class="container">
           <div class="row">
@@ -16,7 +17,7 @@
         <div class="container">
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
-              <apex:form >
+              
               <apex:commandButton action="{!listRecentVideos}" value="Dave and Ava" styleClass="btn active" id="btn31" reRender="listRecentVideos">
                   <apex:param name="channelId" value="UC6zhI71atP7YLoZyIyCIGNw" assignTo="{!channelId}"/>
               </apex:commandButton>
@@ -32,7 +33,7 @@
               <apex:commandButton action="{!listRecentVideos}" value="Jackson" styleClass="btn" id="btn34" reRender="listRecentVideos">
                   <apex:param name="channelId" value="UCy0F6thcJPzPFt_70Q7_x2g" assignTo="{!channelId}"/>
               </apex:commandButton>
-              </apex:form>
+              
             </div>
           </div>
         </div>
@@ -47,19 +48,15 @@
                     <!-- Welcome Music Area -->
                     <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
                       <div class="poca-music-thumbnail">
-                        <apex:image url="{!itemRecent.snippet.thumbnails.high.url}" alt="{!itemRecent.snippet.title}" height="300"/>
+                        <iframe width="535" height="300" frameborder="0" 
+                            src="https://www.youtube.com/embed/{!itemRecent.contentDetails.upload.videoId}">
+                        </iframe>
                       </div>
                       <div class="poca-music-content text-center">
                         <span class="music-published-date mb-2">{!itemRecent.snippet.publishedAt}</span>
-                        <h2>{!itemRecent.snippet.title}</h2>
                         <div class="music-meta-data">
-                          <p>By <a href="#" class="music-author">{!itemRecent.snippet.channelTitle}</a></p>
-                        </div>
-                        <!-- Music Player -->
-                        <div class="poca-music-player">
-                          <audio preload="auto" controls="controls">
-                            <source src="{!itemRecent.contentDetails.upload.videoId}"/>
-                          </audio>
+                            {!itemRecent.snippet.title}
+                            <p>By <a href="#" class="music-author">{!itemRecent.snippet.channelTitle}</a></p>
                         </div>
                         <!-- Likes, Share & Download -->
                         <div class="likes-share-download d-flex align-items-center justify-content-between">
@@ -82,9 +79,10 @@
         <div class="container">
           <div class="row">
             <div class="col-12 text-center">
-              <a href="#" class="btn poca-btn mt-70">Load More</a>
+                <apex:commandLink action="{!listRecentVideos}" value="Next Page" styleClass="btn poca-btn mt-70" reRender="listRecentVideos"/>
             </div>
           </div>
         </div>
       </section>
+    </apex:form>
 </apex:page>
