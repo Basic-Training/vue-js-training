@@ -18,11 +18,13 @@
 		<members>VTM_Site_Common_TopSocial</members>
 		<members>VTM_Site_Common_Welcome</members>
 		<members>VTM_Site_HomePage</members>
+		<members>VTM_Site_SearchPage</members>
 		<members>VTM_Site_List_Live_Broadcast</members>
 		<members>VTM_Site_List_Most_Popular_Artist</members>
 		<members>VTM_Site_List_Most_Popular_Video</members>
+		<members>VTM_Site_List_Search_Video</members>
 		<members>VTM_Site_List_Recent_Video</members>
-		<members>VTM_Site_Newsletter</members>
+		<members>VTM_Site_Common_Newsletter</members>
 		<members>VTM_YouTubeActivityPage</members>
 		<members>VTM_YouTubeChannelPage</members>
 		<members>VTM_YouTubeCountryPage</members>

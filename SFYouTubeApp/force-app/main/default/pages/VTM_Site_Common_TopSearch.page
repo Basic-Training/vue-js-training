@@ -1,5 +1,5 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false">
-    <form action="index.html" method="post">
+    <form action="/apex/VTM_Site_SearchPage" method="post">
         <input
             type="search"
             name="top-search-bar"

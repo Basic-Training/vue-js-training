@@ -215,6 +215,36 @@ public with sharing class VTM_YouTubeVideoController {
         return null;
     }
 
+    // List videos display on Search page with searchText & country
+    public PageReference listSearchVideo() {
+        VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
+        SEARCH_URL = youTubeSettings.VIDEO_URL__c;
+        API_KEY = youTubeSettings.API_KEY__c;
+
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        HttpResponse res = null;
+        String endpoint = SEARCH_URL +
+            '?part=snippet,contentDetails,statistics' +
+            '&maxResults=' + resultsPerPage +
+            '&q=' + this.searchText +
+            '&pageToken=' + pageTokenPopular +
+            '&regionCode=' + this.regionCode +
+            '&key=' + API_KEY;
+        req.setEndPoint(endpoint);
+        req.setMethod('GET');
+        try {
+            res = http.send(req);
+        } catch (System.CalloutException e){
+            System.debug('ERROR:' + e);
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
+        }
+        Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
+        this.items = response.items;
+        this.pageTokenPopular = response.nextPageToken;
+        return null;
+    }
+
     public void listRelatedVideos() {
         /*
         SEARCH_URL

@@ -1,0 +1,88 @@
+<apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listPopularVideosByCountry}">
+  <apex:form >  
+  <section class="poca-latest-epiosodes section-padding-80">
+        <div class="container">
+          <div class="row">
+            <!-- Section Heading -->
+            <div class="col-12">
+              <div class="section-heading text-center">
+                <h2>Video Search '{!searchText}' List</h2>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Projects Menu -->
+        <div class="container">
+          <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="text-center portfolio-menu">
+
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="Vietnam" styleClass="btn active" id="btn11" reRender="listPopularVideo">
+                  <apex:param name="regionCode" value="VN" assignTo="{!regionCode}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="United States" styleClass="btn" id="btn12" reRender="listPopularVideo">
+                  <apex:param name="regionCode" value="US" assignTo="{!regionCode}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="France" styleClass="btn" id="btn13" reRender="listPopularVideo">
+                  <apex:param name="regionCode" value="FR" assignTo="{!regionCode}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listPopularVideosByCountry}" value="Italia" styleClass="btn" id="btn14" reRender="listPopularVideo">
+                  <apex:param name="regionCode" value="IT" assignTo="{!regionCode}"/>
+              </apex:commandButton>
+              
+            </div>
+          </div>
+        </div>
+        
+        <apex:pageBlock id="listPopularVideo">
+        <div class="container">
+          <div class="row poca-portfolio">
+            <!-- List Vietnam Videos -->
+            <apex:repeat value="{!items}" var="item" id="theItem">
+                <!-- Single gallery Item -->
+                <div class="col-12 col-md-6 single_gallery_item {!regionCode} wow fadeInUp" data-wow-delay="0.2s">
+                    <!-- Welcome Music Area -->
+                    <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
+                      <div class="poca-music-thumbnail">
+                          <iframe width="535" height="300" frameborder="0" 
+                            src="https://www.youtube.com/embed/{!item.id}">
+                          </iframe>
+                      </div>
+                      <div class="poca-music-content text-center">
+                        <span class="music-published-date mb-2">{!item.snippet.publishedAt}</span>
+                        <div class="music-meta-data">
+                          {!item.snippet.title}
+                          <p>By <a href="#" class="music-author">{!item.snippet.channelTitle}</a></p>
+                        </div>
+                        <!-- Likes, Share & Download -->
+                        <div class="likes-share-download d-flex align-items-center justify-content-between">
+                          <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like ({!item.statistics.likeCount})</a>
+                          <div>
+                            <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Comment({!item.statistics.commentCount})</a>
+                            <a href="#"><i class="fa fa-download" aria-hidden="true"></i> View ({!item.statistics.viewCount})</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Single gallery Item -->
+            </apex:repeat>
+            <!-- List Vietnam Videos -->
+          </div>
+        </div>
+      </apex:pageBlock>
+    
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              <apex:commandLink action="{!listPopularVideosByCountry}" value="Next Page" styleClass="btn poca-btn mt-70" reRender="listPopularVideo"/>
+            </div>
+          </div>
+        </div>
+      </section>
+    </apex:form>
+</apex:page>

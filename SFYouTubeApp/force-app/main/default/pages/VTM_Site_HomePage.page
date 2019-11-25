@@ -8,7 +8,7 @@
         <!-- Preloader -->
         <div id="preloader">
             <div class="preloader-thumbnail">
-                <img src="./img/core-img/preloader.png" alt=""/>
+                <img src="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/img/core-img/preloader.png')}" alt=""/>
             </div>
         </div>
 
@@ -37,11 +37,11 @@
         <!-- ***** Featured Guests Area End ***** -->
 
         <!-- ***** Newsletter Area Start ***** -->
-        <apex:include pagename="VTM_Site_Newsletter"/>
+        <!--apex:include pagename="VTM_Site_Newsletter"/-->
         <!-- ***** Newsletter Area End ***** -->
 
         <!-- ***** Footer Area Start ***** -->
-        <apex:include pagename="VTM_Site_Common_Footer"/>
+        <!--apex:include pagename="VTM_Site_Common_Footer"/-->
         <!-- ***** Footer Area End ***** -->
 
         <!-- ******* All JS ******* -->

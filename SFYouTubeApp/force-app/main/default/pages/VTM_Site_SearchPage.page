@@ -1,0 +1,53 @@
+<apex:page standardStylesheets="false" showheader="false" sidebar="false">
+    <html lang="en">
+        <head>
+            <apex:include pagename="VTM_Site_Common_Header"/>
+        </head>
+    
+        <body>
+            <!-- Preloader -->
+            <div id="preloader">
+                <div class="preloader-thumbnail">
+                    <img src="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/img/core-img/preloader.png')}" alt=""/>
+                </div>
+            </div>
+    
+            <!-- ***** Header Area Start ***** -->
+            <apex:include pagename="VTM_Site_Common_Nav"/>
+            <!-- ***** Header Area End ***** -->
+    
+            <!-- ***** Welcome Area Start ***** -->
+            <apex:include pagename="VTM_Site_Common_Welcome"/>
+            <!-- ***** Welcome Area End ***** -->
+            
+            <!-- ***** Latest Episodes Area Start ***** -->
+            <apex:include pagename="VTM_Site_List_Search_Video"/>
+            <!-- ***** Latest Episodes Area End ***** -->
+    
+            <!-- ***** Featured Guests Area Start ***** -->
+            <!--apex:include pagename="VTM_Site_List_Most_Popular_Artist"/-->
+            <!-- ***** Featured Guests Area End ***** -->
+    
+            <!-- ***** Newsletter Area Start ***** -->
+            <!--apex:include pagename="VTM_Site_Newsletter"/-->
+            <!-- ***** Newsletter Area End ***** -->
+    
+            <!-- ***** Footer Area Start ***** -->
+            <!--apex:include pagename="VTM_Site_Common_Footer"/-->
+            <!-- ***** Footer Area End ***** -->
+    
+            <!-- ******* All JS ******* -->
+            <!-- jQuery js -->
+            <apex:includeScript value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/js/jquery.min.js')}"/>        
+            <!-- Popper js -->
+            <apex:includeScript value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/js/popper.min.js')}"/>   
+            <!-- Bootstrap js -->
+            <apex:includeScript value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/js/bootstrap.min.js')}"/>   
+            <!-- All js -->
+            <apex:includeScript value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/js/poca.bundle.js')}"/>   
+            <!-- Active js -->
+            <apex:includeScript value="{!URLFOR($Resource.VTM_Resources, 'VTM_Resources/js/default-assets/active.js')}"/>   
+    
+        </body>
+    </html>
+</apex:page>
