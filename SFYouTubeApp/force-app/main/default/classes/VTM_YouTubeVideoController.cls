@@ -178,7 +178,6 @@ public with sharing class VTM_YouTubeVideoController {
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails,statistics' +
-            '&topicId=/m/04rlf' +  // Music
             '&maxResults=' + resultsPerPage +
             '&chart=mostPopular' +
             '&pageToken=' + pageTokenPopular +
@@ -186,6 +185,7 @@ public with sharing class VTM_YouTubeVideoController {
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
+        System.debug('listPopularVideosByCountry == ' + endpoint);
         try {
             res = http.send(req);
         } catch (System.CalloutException e){
@@ -216,7 +216,7 @@ public with sharing class VTM_YouTubeVideoController {
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
-        System.debug('endpoint === ' + endpoint);
+        System.debug('listLiveBroadcasts === ' + endpoint);
         try {
             res = http.send(req);
         } catch (System.CalloutException e){
@@ -247,7 +247,7 @@ public with sharing class VTM_YouTubeVideoController {
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
-        System.debug('endpoint === ' + endpoint);
+        System.debug('listRecentVideos === ' + endpoint);
         try {
             res = http.send(req);
         } catch (System.CalloutException e){
