@@ -35,7 +35,7 @@
                     <div class="classynav">
                         <ul id="nav">
                             <li class="current-item">
-                                <a href="#">Home</a>
+                                <a href="/apex/VTM_Site_HomePage">Home</a>
                             </li>
                             <li>
                                 <a href="#">All Countries</a>

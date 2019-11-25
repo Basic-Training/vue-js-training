@@ -1,12 +1,12 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listSearchVideo}">
   <apex:form >  
-  <section class="poca-latest-epiosodes section-padding-80">
+    <section class="poca-latest-epiosodes section-padding-80">
         <div class="container">
           <div class="row">
             <!-- Section Heading -->
             <div class="col-12">
               <div class="section-heading text-center">
-                <h2>Video Search '{!searchText}' List</h2>
+                <h2>{!typeSearch} Search '{!searchText}' List</h2>
                 <div class="line"></div>
               </div>
             </div>
@@ -17,53 +17,53 @@
         <div class="container">
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
-
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="Vietnam" styleClass="btn active" id="btn11" reRender="listPopularVideo">
-                  <apex:param name="regionCode" value="VN" assignTo="{!regionCode}"/>
-              </apex:commandButton>
-
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="United States" styleClass="btn" id="btn12" reRender="listPopularVideo">
-                  <apex:param name="regionCode" value="US" assignTo="{!regionCode}"/>
-              </apex:commandButton>
-
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="France" styleClass="btn" id="btn13" reRender="listPopularVideo">
-                  <apex:param name="regionCode" value="FR" assignTo="{!regionCode}"/>
-              </apex:commandButton>
-
-              <apex:commandButton action="{!listPopularVideosByCountry}" value="Italia" styleClass="btn" id="btn14" reRender="listPopularVideo">
-                  <apex:param name="regionCode" value="IT" assignTo="{!regionCode}"/>
-              </apex:commandButton>
               
+              <apex:commandButton action="{!listSearchVideo}" value="Video" styleClass="btn active" id="btn11" reRender="listSearchVideo">
+                  <apex:param name="typeSearch" value="video" assignTo="{!typeSearch}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listSearchVideo}" value="Channel" styleClass="btn" id="btn12" reRender="listSearchVideo">
+                  <apex:param name="typeSearch" value="channel" assignTo="{!typeSearch}"/>
+              </apex:commandButton>
+
+              <apex:commandButton action="{!listSearchVideo}" value="Playlist" styleClass="btn" id="btn13" reRender="listSearchVideo">
+                  <apex:param name="typeSearch" value="playlist" assignTo="{!typeSearch}"/>
+              </apex:commandButton>
+
             </div>
           </div>
         </div>
         
-        <apex:pageBlock id="listPopularVideo">
+        <apex:pageBlock id="listSearchVideo">
         <div class="container">
           <div class="row poca-portfolio">
             <!-- List Vietnam Videos -->
-            <apex:repeat value="{!items}" var="item" id="theItem">
+            <apex:repeat value="{!itemsLive}" var="itemLive" id="theItemLive">
                 <!-- Single gallery Item -->
-                <div class="col-12 col-md-6 single_gallery_item {!regionCode} wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-12 col-md-6 single_gallery_item {!searchText} wow fadeInUp" data-wow-delay="0.2s">
                     <!-- Welcome Music Area -->
                     <div class="poca-music-area style-2 d-flex align-items-center flex-wrap">
                       <div class="poca-music-thumbnail">
                           <iframe width="535" height="300" frameborder="0" 
-                            src="https://www.youtube.com/embed/{!item.id}">
+                            src="https://www.youtube.com/embed/{!itemLive.id.videoId}" style="display: {!displayVideo}">
                           </iframe>
+                          <img src="{!itemLive.snippet.thumbnails.high.url}" height="300" alt="{!itemLive.snippet.channelTitle}" style="display: {!displayChannel}" />
+                          <iframe width="535" height="300" frameborder="0" src="https://www.youtube.com/embed/videoseries?list={!itemLive.id.playlistId}" style="display: {!displayPlaylist}"></iframe>
                       </div>
                       <div class="poca-music-content text-center">
-                        <span class="music-published-date mb-2">{!item.snippet.publishedAt}</span>
+                        <span class="music-published-date mb-2">{!itemLive.snippet.publishedAt}</span>
                         <div class="music-meta-data">
-                          {!item.snippet.title}
-                          <p>By <a href="#" class="music-author">{!item.snippet.channelTitle}</a></p>
+                          {!itemLive.snippet.title}
+                          <p style="display: {!displayVideo}">By <a href="?searchText={!searchText}&typeSearch=video&channelId={!itemLive.snippet.channelId}" class="music-author">{!itemLive.snippet.channelTitle}</a></p>
+                          <p style="display: {!displayChannel}">By <a href="?searchText={!searchText}&typeSearch=video&channelId={!itemLive.id.channelId}" class="music-author">{!itemLive.snippet.channelTitle}</a></p>
+                          <p style="display: {!displayPlaylist}">By <a href="?searchText={!searchText}&typeSearch=video&channelId={!itemLive.snippet.channelId}" class="music-author">{!itemLive.snippet.channelTitle}</a></p>
                         </div>
                         <!-- Likes, Share & Download -->
                         <div class="likes-share-download d-flex align-items-center justify-content-between">
-                          <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like ({!item.statistics.likeCount})</a>
+                          <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (0)</a>
                           <div>
-                            <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Comment({!item.statistics.commentCount})</a>
-                            <a href="#"><i class="fa fa-download" aria-hidden="true"></i> View ({!item.statistics.viewCount})</a>
+                            <a href="#" class="mr-4"><i class="fa fa-share-alt" aria-hidden="true"></i> Comment(0)</a>
+                            <a href="#"><i class="fa fa-download" aria-hidden="true"></i> View (0)</a>
                           </div>
                         </div>
                       </div>
@@ -79,10 +79,10 @@
         <div class="container">
           <div class="row">
             <div class="col-12 text-center">
-              <apex:commandLink action="{!listPopularVideosByCountry}" value="Next Page" styleClass="btn poca-btn mt-70" reRender="listPopularVideo"/>
+              <apex:commandLink action="{!listSearchVideo}" value="Next Page" styleClass="btn poca-btn mt-70" reRender="listSearchVideo"/>
             </div>
           </div>
         </div>
       </section>
-    </apex:form>
+  </apex:form>
 </apex:page>

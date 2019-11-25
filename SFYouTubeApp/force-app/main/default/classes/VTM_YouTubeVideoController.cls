@@ -11,6 +11,50 @@ public with sharing class VTM_YouTubeVideoController {
             searchText = value;
         }
     }
+    public String typeSearch {
+        get {
+            if (typeSearch == null) {
+                typeSearch = 'video';
+            }
+            return typeSearch;
+        }
+        set {
+            typeSearch = value;
+        }
+    }
+    public String displayVideo {
+        get {
+            if (displayVideo == null) {
+                displayVideo = '';
+            }
+            return displayVideo;
+        }
+        set {
+            displayVideo = value;
+        }
+    }
+    public String displayChannel {
+        get {
+            if (displayChannel == null) {
+                displayChannel = 'none';
+            }
+            return displayChannel;
+        }
+        set {
+            displayChannel = value;
+        }
+    }
+    public String displayPlaylist {
+        get {
+            if (displayPlaylist == null) {
+                displayPlaylist = 'none';
+            }
+            return displayPlaylist;
+        }
+        set {
+            displayPlaylist = value;
+        }
+    }
     public String regionCode {
         get {
             if (regionCode == null) {
@@ -25,7 +69,8 @@ public with sharing class VTM_YouTubeVideoController {
     public String channelId {
         get {
             if (channelId == null) {
-                channelId = 'UC6zhI71atP7YLoZyIyCIGNw';
+                //channelId = 'UC6zhI71atP7YLoZyIyCIGNw';
+                channelId = '';
             }
             return channelId;
         }
@@ -133,6 +178,7 @@ public with sharing class VTM_YouTubeVideoController {
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails,statistics' +
+            '&topicId=/m/04rlf' +  // Music
             '&maxResults=' + resultsPerPage +
             '&chart=mostPopular' +
             '&pageToken=' + pageTokenPopular +
@@ -189,6 +235,7 @@ public with sharing class VTM_YouTubeVideoController {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
         SEARCH_URL = youTubeSettings.ACTIVITY_URL__c;
         API_KEY = youTubeSettings.API_KEY__c;
+        channelId = 'UC6zhI71atP7YLoZyIyCIGNw';
 
         Http http = new Http();
         HttpRequest req = new HttpRequest();
@@ -196,7 +243,7 @@ public with sharing class VTM_YouTubeVideoController {
         String endpoint = SEARCH_URL +
             '?part=snippet,contentDetails' +
             '&maxResults=' + resultsPerPage +
-            '&channelId=' + this.channelId +
+            '&channelId=' + channelId +
             '&key=' + API_KEY;
         req.setEndPoint(endpoint);
         req.setMethod('GET');
@@ -217,25 +264,52 @@ public with sharing class VTM_YouTubeVideoController {
 
     // List videos display on Search page with searchText & country
     public PageReference listSearchVideo() {
-        VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
-        SEARCH_URL = youTubeSettings.VIDEO_URL__c;
-        API_KEY = youTubeSettings.API_KEY__c;
-
         Map<String, String> params = ApexPages.currentPage().getParameters();
         if(params.containsKey('searchText')) {
             this.searchText = params.get('searchText');
         }
+        channelId = ApexPages.currentPage().getParameters().get('channelId');
 
+        switch on this.typeSearch {
+            when 'video' {
+                this.displayVideo = '';
+                this.displayChannel = 'none';
+                this.displayPlaylist = 'none';
+            }
+            when 'channel' {
+                this.displayVideo = 'none';
+                this.displayChannel = '';
+                this.displayPlaylist = 'none';
+                channelId = '';
+            }
+            when 'playlist' {
+                this.displayVideo = 'none';
+                this.displayChannel = 'none';
+                this.displayPlaylist = '';
+                channelId = '';
+            }
+        }
+
+        VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
+        SEARCH_URL = youTubeSettings.SEARCH_URL__c;
+        API_KEY = youTubeSettings.API_KEY__c;
+        
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         HttpResponse res = null;
         String endpoint = SEARCH_URL +
-            '?part=snippet,contentDetails,statistics' +
+            '?part=snippet' +
+            '&order=date' + 
+            //'&topicId=/m/04rlf' +  // Music
             '&maxResults=' + resultsPerPage +
             '&q=' + this.searchText +
-            '&pageToken=' + pageTokenPopular +
-            '&regionCode=' + this.regionCode +
+            '&pageToken=' + pageTokenLive +
+            '&type=' + this.typeSearch +
             '&key=' + API_KEY;
+
+        if (String.IsNotBlank(channelId)) {
+            endpoint += '&channelId=' + channelId;
+        }
         System.debug('endpoint ==> ' + endpoint);
         req.setEndPoint(endpoint);
         req.setMethod('GET');
@@ -245,9 +319,9 @@ public with sharing class VTM_YouTubeVideoController {
             System.debug('ERROR:' + e);
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
         }
-        Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
-        this.items = response.items;
-        this.pageTokenPopular = response.nextPageToken;
+        ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
+        this.itemsLive = response.items;
+        this.pageTokenLive = response.nextPageToken;
         return null;
     }
 
@@ -352,6 +426,8 @@ public with sharing class VTM_YouTubeVideoController {
     public class IdVideoLive {
         public String kind { get; set; }
         public String videoId { get; set; }
+        public String channelId { get; set; }
+        public String playlistId { get; set; }
     }
 
     public class SnippetLive {
