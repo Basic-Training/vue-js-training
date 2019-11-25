@@ -2,7 +2,7 @@
     <form action="/apex/VTM_Site_SearchPage" method="post">
         <input
             type="search"
-            name="top-search-bar"
+            name="searchText"
             class="form-control"
             placeholder="Search and hit enter..."/>
         <button type="submit">

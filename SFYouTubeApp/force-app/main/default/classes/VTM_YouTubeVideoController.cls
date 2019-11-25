@@ -221,6 +221,11 @@ public with sharing class VTM_YouTubeVideoController {
         SEARCH_URL = youTubeSettings.VIDEO_URL__c;
         API_KEY = youTubeSettings.API_KEY__c;
 
+        Map<String, String> params = ApexPages.currentPage().getParameters();
+        if(params.containsKey('searchText')) {
+            this.searchText = params.get('searchText');
+        }
+
         Http http = new Http();
         HttpRequest req = new HttpRequest();
         HttpResponse res = null;
@@ -231,6 +236,7 @@ public with sharing class VTM_YouTubeVideoController {
             '&pageToken=' + pageTokenPopular +
             '&regionCode=' + this.regionCode +
             '&key=' + API_KEY;
+        System.debug('endpoint ==> ' + endpoint);
         req.setEndPoint(endpoint);
         req.setMethod('GET');
         try {
