@@ -78,7 +78,7 @@ public with sharing class VTM_YouTubeVideoController {
             channelId = value;
         }
     }
-    private Integer resultsPerPage { 
+    public Integer resultsPerPage { 
         get {
             if (resultsPerPage == null) {
                 resultsPerPage = 4;
@@ -126,15 +126,15 @@ public with sharing class VTM_YouTubeVideoController {
     public VTM_YouTubeVideoController.Item[] items { get; set; }
     public VTM_YouTubeVideoController.ItemLive[] itemsLive { get; set; }
     public VTM_YouTubeVideoController.ItemRecent[] itemsRecent { get; set; }
+    public VTM_YouTubeVideoController.ItemCountry[] itemsCountry { get; set; }
     
-    private String SEARCH_URL { get; set; }
-    private String API_KEY { get; set; }
-    private String videoId { get; set; }
+    public String SEARCH_URL { get; set; }
+    public String API_KEY { get; set; }
+    public String videoId { get; set; }
+    public String displayTitleSearch { get; set; }
+    public String displayTitleAllVideos { get; set; }
 
-    public VTM_YouTubeVideoController() {
-        videoId = ApexPages.currentPage().getParameters().get('id');
-        details();
-    }
+    
 
     public void details() {
         if ((videoId == null) || (videoId == '')) {
@@ -145,22 +145,14 @@ public with sharing class VTM_YouTubeVideoController {
             SEARCH_URL = youTubeSettings.VIDEO_URL__c;
             API_KEY = youTubeSettings.API_KEY__c;
 
-            Http http = new Http();
-            HttpRequest req = new HttpRequest();
-            HttpResponse res = null;
-            String endpoint = SEARCH_URL +
-                '?part=snippet,contentDetails,statistics' +
-                '&id=' + videoId +
-                '&key=' + API_KEY;
-            req.setEndPoint(endpoint);
-            req.setMethod('GET');
-            try {
-                res = http.send(req);
-                System.debug(res.getBody());
-            } catch (System.CalloutException e){
-                System.debug('ERROR:' + e);
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
-            }
+            Map<String, String> mapParams = new Map<String, String>();
+            mapParams.put('key', API_KEY);
+            mapParams.put('part', 'snippet,contentDetails,statistics');
+            mapParams.put('type', 'video');
+            mapParams.put('id', videoId);
+
+            HttpResponse res = VTM_YouTubeVideoManagement.getResponse(SEARCH_URL, mapParams);
+            //System.debug('listPopularVideosByCountry ===> ' + res.getBody());
             
             Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
             this.items = response.items;            
@@ -173,28 +165,22 @@ public with sharing class VTM_YouTubeVideoController {
         SEARCH_URL = youTubeSettings.VIDEO_URL__c;
         API_KEY = youTubeSettings.API_KEY__c;
 
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        HttpResponse res = null;
-        String endpoint = SEARCH_URL +
-            '?part=snippet,contentDetails,statistics' +
-            '&maxResults=' + resultsPerPage +
-            '&chart=mostPopular' +
-            '&pageToken=' + pageTokenPopular +
-            '&regionCode=' + this.regionCode +
-            '&key=' + API_KEY;
-        req.setEndPoint(endpoint);
-        req.setMethod('GET');
-        System.debug('listPopularVideosByCountry == ' + endpoint);
-        try {
-            res = http.send(req);
-        } catch (System.CalloutException e){
-            System.debug('ERROR:' + e);
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
-        }
+        Map<String, String> mapParams = new Map<String, String>();
+        mapParams.put('key', API_KEY);
+        mapParams.put('part', 'snippet,contentDetails,statistics');
+        mapParams.put('type', 'video');
+        mapParams.put('regionCode', this.regionCode);
+        mapParams.put('maxResults', String.valueOf(resultsPerPage));
+        mapParams.put('pageToken', pageTokenPopular);
+        mapParams.put('chart', 'mostPopular');
+
+        HttpResponse res = VTM_YouTubeVideoManagement.getResponse(SEARCH_URL, mapParams);
+        //System.debug('listPopularVideosByCountry ===> ' + res.getBody());
+
         Response response = (Response)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.Response.class);
         this.items = response.items;
         this.pageTokenPopular = response.nextPageToken;
+        
         return null;
     }
 
@@ -204,26 +190,18 @@ public with sharing class VTM_YouTubeVideoController {
         SEARCH_URL = youTubeSettings.SEARCH_URL__c;
         API_KEY = youTubeSettings.API_KEY__c;
 
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        HttpResponse res = null;
-        String endpoint = SEARCH_URL +
-            '?part=snippet' +
-            '&maxResults=' + resultsPerPage +
-            '&eventType=live' +
-            '&type=video' +
-            '&q=' + this.searchText +
-            '&key=' + API_KEY;
-        req.setEndPoint(endpoint);
-        req.setMethod('GET');
-        System.debug('listLiveBroadcasts === ' + endpoint);
-        try {
-            res = http.send(req);
-        } catch (System.CalloutException e){
-            System.debug('ERROR:' + e);
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
-        }
-        
+        Map<String, String> mapParams = new Map<String, String>();
+        mapParams.put('key', API_KEY);
+        mapParams.put('part', 'snippet');
+        mapParams.put('type', 'video');
+        mapParams.put('eventType', 'live');
+        mapParams.put('q', this.searchText);
+        mapParams.put('maxResults', String.valueOf(resultsPerPage));
+        mapParams.put('pageToken', pageTokenLive);
+
+        HttpResponse res = VTM_YouTubeVideoManagement.getResponse(SEARCH_URL, mapParams);
+        //System.debug('listLiveBroadcasts ===> ' + res.getBody());
+
         ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
         this.itemsLive = response.items;
         this.pageTokenLive = response.nextPageToken;
@@ -237,55 +215,53 @@ public with sharing class VTM_YouTubeVideoController {
         API_KEY = youTubeSettings.API_KEY__c;
         channelId = 'UC6zhI71atP7YLoZyIyCIGNw';
 
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        HttpResponse res = null;
-        String endpoint = SEARCH_URL +
-            '?part=snippet,contentDetails' +
-            '&maxResults=' + resultsPerPage +
-            '&channelId=' + channelId +
-            '&key=' + API_KEY;
-        req.setEndPoint(endpoint);
-        req.setMethod('GET');
-        System.debug('listRecentVideos === ' + endpoint);
-        try {
-            res = http.send(req);
-        } catch (System.CalloutException e){
-            System.debug('ERROR:' + e);
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
-        }
-        
+        Map<String, String> mapParams = new Map<String, String>();
+        mapParams.put('key', API_KEY);
+        mapParams.put('part', 'snippet,contentDetails');
+        mapParams.put('type', 'video');
+        mapParams.put('channelId', channelId);
+        mapParams.put('maxResults', String.valueOf(resultsPerPage));
+        mapParams.put('pageToken', pageTokenRecent);
+
+        HttpResponse res = VTM_YouTubeVideoManagement.getResponse(SEARCH_URL, mapParams);
+        //System.debug('listRecentVideos ===> ' + res.getBody());
+
         ResponseRecent response = (ResponseRecent)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseRecent.class);
-        System.debug('response.items === ' + response.items);
         this.itemsRecent = response.items;
         this.pageTokenRecent = response.nextPageToken;
         return null;
     }
 
     // List videos display on Search page with searchText & country
-    public PageReference listSearchVideo() {
+    public PageReference listSearchVideo() {        
         Map<String, String> params = ApexPages.currentPage().getParameters();
         if(params.containsKey('searchText')) {
             this.searchText = params.get('searchText');
         }
+        else {
+            searchText = ApexPages.currentPage().getParameters().get('searchText');
+        }
+        
+        typeSearch = ApexPages.currentPage().getParameters().get('typeSearch');
         channelId = ApexPages.currentPage().getParameters().get('channelId');
+        regionCode = ApexPages.currentPage().getParameters().get('regionCode');
 
-        switch on this.typeSearch {
+        switch on typeSearch {
             when 'video' {
-                this.displayVideo = '';
-                this.displayChannel = 'none';
-                this.displayPlaylist = 'none';
+                displayVideo = '';
+                displayChannel = 'none';
+                displayPlaylist = 'none';
             }
             when 'channel' {
-                this.displayVideo = 'none';
-                this.displayChannel = '';
-                this.displayPlaylist = 'none';
+                displayVideo = 'none';
+                displayChannel = '';
+                displayPlaylist = 'none';
                 channelId = '';
             }
             when 'playlist' {
-                this.displayVideo = 'none';
-                this.displayChannel = 'none';
-                this.displayPlaylist = '';
+                displayVideo = 'none';
+                displayChannel = 'none';
+                displayPlaylist = '';
                 channelId = '';
             }
         }
@@ -293,35 +269,53 @@ public with sharing class VTM_YouTubeVideoController {
         VTM_YOUTUBE_SETTINGS__c youTubeSettings = VTM_YOUTUBE_SETTINGS__c.getInstance();
         SEARCH_URL = youTubeSettings.SEARCH_URL__c;
         API_KEY = youTubeSettings.API_KEY__c;
-        
-        Http http = new Http();
-        HttpRequest req = new HttpRequest();
-        HttpResponse res = null;
-        String endpoint = SEARCH_URL +
-            '?part=snippet' +
-            '&order=date' + 
-            //'&topicId=/m/04rlf' +  // Music
-            '&maxResults=' + resultsPerPage +
-            '&q=' + this.searchText +
-            '&pageToken=' + pageTokenLive +
-            '&type=' + this.typeSearch +
-            '&key=' + API_KEY;
 
-        if (String.IsNotBlank(channelId)) {
-            endpoint += '&channelId=' + channelId;
+        Map<String, String> mapParams = new Map<String, String>();
+        mapParams.put('key', API_KEY);
+        mapParams.put('part', 'snippet');
+        mapParams.put('type', typeSearch);
+        mapParams.put('order', 'date');
+        // mapParams.put('topicId', '/m/04rlf'); // Music
+        mapParams.put('maxResults', String.valueOf(resultsPerPage));
+        mapParams.put('pageToken', pageTokenLive);
+
+        if (String.isNotBlank(searchText)) {
+            mapParams.put('q', searchText);
+            displayTitleSearch = '';
+            displayTitleAllVideos = 'none';
         }
-        System.debug('endpoint ==> ' + endpoint);
-        req.setEndPoint(endpoint);
-        req.setMethod('GET');
-        try {
-            res = http.send(req);
-        } catch (System.CalloutException e){
-            System.debug('ERROR:' + e);
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'Unable to run search at this time.  Please try again later.'));
+        else {
+            displayTitleSearch = 'none';
+            displayTitleAllVideos = '';
         }
+        
+        if (String.isNotBlank(channelId)) {
+            mapParams.put('channelId', channelId);
+        }
+
+        if (String.isNotBlank(regionCode)) {
+            mapParams.put('regionCode', regionCode);
+        }
+
+        HttpResponse res = VTM_YouTubeVideoManagement.getResponse(SEARCH_URL, mapParams);
+        System.debug('listSearchVideo ===> ' + res.getBody());
+        
         ResponseLive response = (ResponseLive)JSON.deserialize(res.getBody(), VTM_YouTubeVideoController.ResponseLive.class);
         this.itemsLive = response.items;
         this.pageTokenLive = response.nextPageToken;
+        return null;
+    }
+
+    public PageReference listCountries() {
+        //videoId = ApexPages.currentPage().getParameters().get('id');
+        //details();
+
+        StaticResource sr = [Select id,body from StaticResource Where Name = 'VTM_youtube_countries'];
+        String jsonCountries = sr.body.toString();
+        System.debug('SR@@@'+ jsonCountries);
+
+        ResponseCountry response = (ResponseCountry)JSON.deserialize(jsonCountries, VTM_YouTubeVideoController.ResponseCountry.class);
+        this.itemsCountry = response.items;
         return null;
     }
 
@@ -490,6 +484,26 @@ public with sharing class VTM_YouTubeVideoController {
 
     public class UploadRecent {
         public String videoId { get; set; }
+    }
+
+    // list countries
+
+    public class ResponseCountry {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public VTM_YouTubeVideoController.ItemCountry[] items { get; set; }
+    }
+
+    public class ItemCountry {
+        public String kind { get; set; }
+        public String etag { get; set; }
+        public String id { get; set; }
+        public VTM_YouTubeVideoController.SnippetCountry snippet { get; set; }
+    }
+
+    public class SnippetCountry {
+        public String gl { get; set; }
+        public String name { get; set; }
     }
 
 }

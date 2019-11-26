@@ -1,32 +1,35 @@
 <apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listSearchVideo}">
   <apex:form >  
     <section class="poca-latest-epiosodes section-padding-80">
+      <apex:pageBlock id="titleSearchVideo">
         <div class="container">
           <div class="row">
             <!-- Section Heading -->
             <div class="col-12">
               <div class="section-heading text-center">
-                <h2>{!typeSearch} Search '{!searchText}' List</h2>
+                <h2 style="display: {!displayTitleSearch}">{!typeSearch} Search '{!searchText}' List</h2>
+                <h2 style="display: {!displayTitleAllVideos}">List Videos</h2>
                 <div class="line"></div>
               </div>
             </div>
           </div>
         </div>
-    
+      </apex:pageBlock>
+
         <!-- Projects Menu -->
-        <div class="container">
+        <div class="container" style="display: {!displayTitleSearch}">
           <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
             <div class="text-center portfolio-menu">
               
-              <apex:commandButton action="{!listSearchVideo}" value="Video" styleClass="btn active" id="btn11" reRender="listSearchVideo">
+              <apex:commandButton action="{!listSearchVideo}" value="Video" styleClass="btn active" id="btn11" reRender="listSearchVideo,titleSearchVideo">
                   <apex:param name="typeSearch" value="video" assignTo="{!typeSearch}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listSearchVideo}" value="Channel" styleClass="btn" id="btn12" reRender="listSearchVideo">
+              <apex:commandButton action="{!listSearchVideo}" value="Channel" styleClass="btn" id="btn12" reRender="listSearchVideo,titleSearchVideo">
                   <apex:param name="typeSearch" value="channel" assignTo="{!typeSearch}"/>
               </apex:commandButton>
 
-              <apex:commandButton action="{!listSearchVideo}" value="Playlist" styleClass="btn" id="btn13" reRender="listSearchVideo">
+              <apex:commandButton action="{!listSearchVideo}" value="Playlist" styleClass="btn" id="btn13" reRender="listSearchVideo,titleSearchVideo">
                   <apex:param name="typeSearch" value="playlist" assignTo="{!typeSearch}"/>
               </apex:commandButton>
 

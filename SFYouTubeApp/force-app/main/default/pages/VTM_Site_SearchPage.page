@@ -20,9 +20,13 @@
             <apex:include pagename="VTM_Site_Common_Welcome"/>
             <!-- ***** Welcome Area End ***** -->
             
-            <!-- ***** Latest Episodes Area Start ***** -->
+            <!-- ***** List Search Videos Area Start ***** -->
             <apex:include pagename="VTM_Site_List_Search_Video"/>
-            <!-- ***** Latest Episodes Area End ***** -->
+            <!-- ***** List Search Videos Area End ***** -->
+
+            <!-- ***** List Countries Area Start ***** -->
+            <apex:include pagename="VTM_Site_List_Country"/>
+            <!-- ***** List Countries Area End ***** -->
     
             <!-- ***** Featured Guests Area Start ***** -->
             <!--apex:include pagename="VTM_Site_List_Most_Popular_Artist"/-->

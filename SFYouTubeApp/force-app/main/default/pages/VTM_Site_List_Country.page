@@ -1,0 +1,34 @@
+<apex:page standardStylesheets="false" showheader="false" sidebar="false" controller="VTM_YouTubeVideoController" action="{!listCountries}">
+<apex:form >
+    <section class="poca-latest-epiosodes section-padding-80">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2 style="display: {displayTitleAllVideos}">Search Videos By Country</h2>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="display: {!displayTitleSearch}">
+            <div class="poca-projects-menu mb-30 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="text-center portfolio-menu">
+                    <!-- List Countries -->
+                    <apex:repeat value="{!itemsCountry}" var="itemCtry" id="theItemCtry">
+                        <!-- Single Item -->
+                        <a href="/apex/VTM_Site_SearchPage?searchText={!searchText}&typeSearch=video&channelId=&regionCode={!itemCtry.snippet.gl}" class="btn">{!itemCtry.snippet.name}</a>
+                        <!-- Single Item -->
+                    </apex:repeat>
+                    <!-- List Countries -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Menu -->
+
+    </section>
+</apex:form>
+</apex:page>

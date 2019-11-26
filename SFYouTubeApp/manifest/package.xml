@@ -33,15 +33,18 @@
 		<members>VTM_YouTubeSearchPage</members>
 		<members>VTM_YouTubeVideoCatePage</members>
 		<members>VTM_YouTubeVideoPage</members>
+		<members>VTM_Site_List_Country</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
 		<members>VTM_YOUTUBE_SETTINGS__c</members>
 		<members>VTM_YouTube_Video__c</members>
+		<members>VTM_YouTube_Country__c</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
 		<members>VTM_Resources</members>
+		<members>VTM_youtube_countries</members>
 		<name>StaticResource</name>
 	</types>
 	<version>46.0</version>
